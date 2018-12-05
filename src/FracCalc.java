@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class FracCalc {
 
     /**
@@ -6,9 +7,16 @@ public class FracCalc {
      */
     public static void main(String[] args) 
     {
+    	Scanner scanner =new Scanner(System.in);
+    	//Prompts the user to input their equation
+    	System.out.println("Input fraction equation. Make sure to separate mixed number with a _"); 
+    	String output;
+    	output=produceAnswer(scanner.nextLine());
+    	System.out.println(output);
         // TODO: Read the input from the user and call produceAnswer with an equation
         // Checkpoint 1: Create a Scanner, read one line of input, pass that input to produceAnswer, print the result.
         // Checkpoint 2: Accept user input multiple times.
+    	scanner.close();
     }
     
     /**
@@ -18,8 +26,27 @@ public class FracCalc {
      * @return the result of the fraction after it has been calculated.
      *      Example: return ==> "1_1/4"
      */
+    
     public static String produceAnswer(String input)
     { 
+    	String operator="";
+    	String operand1="";
+    	String operand2="";
+    	//Tests all indexes of the strings to detect operands and operator
+    	int test=0;
+    	int count=0;
+    	while(test==0) {
+    		if(input.charAt(count)==' '){
+    			test=1;
+    			operator=input.substring(count+1,count+2);
+    			operand1=input.substring(0,count);
+    			operand2=input.substring(count+3);
+    			}
+    		count++;
+    		}
+    	return operand2;
+    	}
+    	
         // TODO: Implement this function to produce the solution to the input
         // Checkpoint 1: Return the second operand.  Example "4/5 * 1_2/4" returns "1_2/4".
         // Checkpoint 2: Return the second operand as a string representing each part.
@@ -30,8 +57,7 @@ public class FracCalc {
         // Final project: All answers must be reduced.
         //               Example "4/5 * 1_2/4" returns "1_1/5".
         
-        return "";
-    }
+    
 
     // TODO: Fill in the space below with helper methods
     
