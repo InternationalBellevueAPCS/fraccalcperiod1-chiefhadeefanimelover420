@@ -56,7 +56,7 @@ public class FracCalc {
 		int numerator1=0;
 		int whole1=0; 
 		int denominator1=1;
-	
+
 		if(slashIndex1!=-1){
 			if(underscoreIndex1!=-1) {
 				whole1=Integer.parseInt(operand1.substring(0,underscoreIndex1));
@@ -74,7 +74,7 @@ public class FracCalc {
 		int numerator2=0;
 		int whole2=0; 
 		int denominator2=1;
-	
+
 		if(slashIndex2!=-1){
 			if(underscoreIndex2!=-1) {
 				whole2=Integer.parseInt(operand2.substring(0,underscoreIndex2));
@@ -85,9 +85,34 @@ public class FracCalc {
 		}else {
 			whole2=Integer.parseInt(operand2);
 		}
+		//Converts fractions to correct sign
+		if(whole1<0) {
+			numerator1*=-1;
+		}
+		if(whole2<0) {
+			numerator2*=-1;
+		}
+		//Converts mixed numbers to improper fraction
+		numerator1+=whole1*denominator1;
+		numerator2+=whole2*denominator2;
 
-
-		return "whole:"+whole2+" numerator:"+numerator2+" denominator:"+denominator2;
+		int numeratorFinal=0;
+		int denominatorFinal=0;
+//Finds the result numerator and denominator depending on the sign of the operator
+		if(operator.equals("*")) {
+			numeratorFinal=numerator1*numerator2;
+			denominatorFinal=denominator1*denominator2;
+		}else if(operator.equals("/")) {
+			numeratorFinal=numerator1*denominator2;
+			denominatorFinal=numerator2*denominator1;
+		}else if(operator.equals("+")) {
+			numeratorFinal=numerator1*denominator2+numerator2*denominator1;
+			denominatorFinal=denominator1*denominator2;
+		}else if(operator.equals("-")){
+			numeratorFinal=numerator1*denominator2-numerator2*denominator1;
+			denominatorFinal=denominator1*denominator2;
+		}
+		return numeratorFinal + "/" + denominatorFinal;
 	}
 
 	// TODO: Implement this function to produce the solution to the input
