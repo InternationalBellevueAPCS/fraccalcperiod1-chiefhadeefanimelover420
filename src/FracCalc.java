@@ -98,7 +98,7 @@ public class FracCalc {
 
 		int numeratorFinal=0;
 		int denominatorFinal=0;
-//Finds the result numerator and denominator depending on the sign of the operator
+		//Finds the result numerator and denominator depending on the sign of the operator
 		if(operator.equals("*")) {
 			numeratorFinal=numerator1*numerator2;
 			denominatorFinal=denominator1*denominator2;
@@ -112,8 +112,43 @@ public class FracCalc {
 			numeratorFinal=numerator1*denominator2-numerator2*denominator1;
 			denominatorFinal=denominator1*denominator2;
 		}
-		return numeratorFinal + "/" + denominatorFinal;
+		//Ensures that the denominator is not negative
+		if(denominatorFinal<0) {
+			numeratorFinal*=-1;
+			denominatorFinal*=-1;
+		}
+		//Reduces fraction by finding the greatest common divisor
+		int gcd=greatestCommonDivisor(numeratorFinal,denominatorFinal);
+		numeratorFinal/=gcd;
+		denominatorFinal/=gcd;
+		//Converts the improper fraction to a mixed number if necessary 
+		int wholeFinal=0;
+		if(numeratorFinal>0) {
+			for(;numeratorFinal>denominatorFinal;numeratorFinal-=denominatorFinal) {
+				wholeFinal++;
+			}
+			//Converts improper negative fraction into a mixed number
+		}else{ 	
+			for(;Math.abs(numeratorFinal)>denominatorFinal;numeratorFinal+=denominatorFinal) {
+				wholeFinal--;
+			}
+		}
+		//Checks if fraction is a whole number 
+		if(denominatorFinal==1) {
+			wholeFinal+=numeratorFinal;
+			numeratorFinal=0;
+		}
+		//Returns final answer
+		if(numeratorFinal==0) {
+			return wholeFinal+"";
+		}
+		else if(wholeFinal!=0) {
+			return wholeFinal+"_"+Math.abs(numeratorFinal)+ "/" + denominatorFinal;
+		}else {
+			return numeratorFinal + "/" + denominatorFinal;
+		}
 	}
+
 
 	// TODO: Implement this function to produce the solution to the input
 	// Checkpoint 1: Return the second operand.  Example "4/5 * 1_2/4" returns "1_2/4".
